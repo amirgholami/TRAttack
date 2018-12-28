@@ -12,8 +12,8 @@ from torch.autograd import Variable, grad
 from utils import *
 from models.resnet import *
 
-import hessianflow as hf
-import hessianflow.optimizer.optm_utils as hf_optm_utils
+import HessianFlow.hessianflow as hf
+import HessianFlow.hessianflow.optimizer.optm_utils as hf_optm_utils
 
 import trattack
 from trattack.attack_utils import *
