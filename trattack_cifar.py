@@ -65,7 +65,13 @@ model = torch.nn.DataParallel(model)
 model.load_state_dict(torch.load(args.resume))
 model.eval()
 
-
+if args.norm == 2:
+    print('\nPerforming TR L2 Attack')
+elif args.norm == 8:
+    print('\nPerforming TR Linf Attack')
+else:
+    print('\nError! Incorrect option passed for norm')
+    return
 ######## begin attack
 stat_time = time.time()
 num_d = 10000 

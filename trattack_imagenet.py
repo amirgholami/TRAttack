@@ -186,11 +186,15 @@ def main():
     result_dis = 0.
     result_large = 0.
 
+    num_data = 0
+
     start_time = time.time()
     for i, (data, target) in enumerate(test_loader):
         X_ori  = data
         Y_test = target
         
+        num_data += len(target)
+
         # Apply TR Attack
         if not args.adap:
             X_tr_first, _ = trattack.tr_attack_iter(model, data, target, args.eps, c = args.classes, p = args.norm, iter = args.iter, worst_case = args.worst_case)
@@ -205,12 +209,16 @@ def main():
         result_dis += dis
         result_large = max(ldis, result_large)
         if args.plotting:
+            # plot the first image of the final batch
             print('\nSaving purturbed images to ', args.plotting_path)
             plotting(X_ori[0:1, :], X_tr_first[0:1, :], model)
     print('time: %.4f' % (time.time() - start_time))
-    print('\nAccuracy after TR perturbation: %.4f' % (result_acc / (i + 1)))
-    print('\nAverage TR relative perturbation (among input images): %.4f' % (result_dis / (i + 1)))
-    print('\nMaximum TR relative perturbation (among input images): %.4f' % result_large)
+    print('\nAccuracy after TR perturbation: %.4f' % (result_acc / float(num_data)))
+    if num_data >= 2:
+        print('\nAverage TR relative perturbation (among input images): %.4f' % (result_dis / float(num_data)))
+        print('\nMaximum TR relative perturbation (among input images): %.4f' % result_large)
+    else:
+        print('\nThe TR relative perturbation of this image is: %.4f' % result_large)
 
 
 
