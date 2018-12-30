@@ -27,16 +27,16 @@ parser.add_argument('--no-cuda', action = 'store_true', default = False,
 parser.add_argument('--seed', type = int, default = 1, metavar = 'S',
                     help='random seed (default: 1)')
 parser.add_argument('--norm', type = int, default = 2, metavar = 'S',
-                    help='2')
+                    help='2 or 8 (infinity norm)')
 parser.add_argument('--classes', type = int, default = 9, metavar = 'S',
-                    help='')
+                    help='select the best/hardest class of 9 classes')
 parser.add_argument('--log-interval', type = int, default = 10, metavar = 'N',
                     help='how many batches to wait before logging training status')
 parser.add_argument('--eps', type = float, default = 0.001, metavar = 'E',
-                        help='how far to perturb input in the negative gradient sign')
+                        help='how far to perturb input')
 parser.add_argument('--resume', type = str, default = 'net.pkl', help = 'choose an existing model')
-parser.add_argument('--worst-case', type = int, default = 0, help =  'choose an archtecture')
-parser.add_argument('--iter', type = int, default = 5000, help = 'choose an archtecture')
+parser.add_argument('--worst-case', type = int, default = 0, help =  'attack the best/worst (hardest) case')
+parser.add_argument('--iter', type = int, default = 5000, help = 'largest number of iterations')
 parser.add_argument('--adap', action = 'store_true', default = False,
         help='Using adaptive method or not')
 
@@ -98,7 +98,7 @@ print('\nOriginal Accuracy %.4f' % (clean_acc))
 result_acc = test_acc(model, X_tr_first, Y_test)
 result_dis, result_large = distance(X_tr_first, X_ori, norm=args.norm)
 
-print('\nAcc: %.2f | Ave Distance %.4f | Max Distance %.4f' % (result_acc, result_dis, result_large))
+print('\nAcc after TR attack: %.2f | Ave Distance (Perturbation) %.4f | Max Distance (Perturbation) %.4f' % (result_acc, result_dis, result_large))
 
 
 

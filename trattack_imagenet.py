@@ -76,15 +76,15 @@ parser.add_argument('--gpu', default=None, type=int,
                     help='GPU id to use.')
 
 parser.add_argument('--eps', default=0.005, type=float,
-                     help='')
+                     help='perturbation magnitude')
 parser.add_argument('--classes', default = 9, type = int,
-                    help='')
+                    help='attack the best/hardest classes of out 9 classes')
 parser.add_argument('--norm', default = 2, type = int,
-                    help='')
+                    help='2 or 8 (Infity) norm')
 parser.add_argument('--iter', default = 5000, type = int,
-                    help='GPU id to use.')
+                    help='Largest number of iterations')
 parser.add_argument('--worst-case', default = 0, type = int,
-                    help='use worst-case attack')
+                    help='use best/hardest (worst) case attack')
 parser.add_argument('--adap', action = 'store_true', default = False,
         help='Using adaptive method or not')
 # for plotting
